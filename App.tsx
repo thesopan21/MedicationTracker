@@ -7,6 +7,8 @@ import HealthDataScreen from './src/screens/HealthDataScreen/HealthDataScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import MedicationScreen from './src/screens/MedicationScreen/MedicationScreen';
+import MedicationDetailScreen from './src/screens/MedicationDetailScreen/MedicationDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +28,8 @@ function App(): React.JSX.Element {
       />
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="MedicationScreen" component={MedicationScreen} />
+          <Stack.Screen name="MedicationDetailScreen" component={MedicationDetailScreen} />
           <Stack.Screen name="Calender" component={CalenderScreen} />
           <Stack.Screen name="HealthData" component={HealthDataScreen} />
         </Stack.Navigator>

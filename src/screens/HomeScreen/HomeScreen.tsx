@@ -2,8 +2,6 @@ import React from 'react';
 
 import {
     FlatList,
-    ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
     useColorScheme,
@@ -29,7 +27,7 @@ const HomeScreen = () => {
     };
 
     return (
-        <View style={[backgroundStyle, { paddingHorizontal: safePadding }]}>
+        <View style={[backgroundStyle, { paddingHorizontal: safePadding, flex: 1 }]}>
 
             <HomeScreenHeader />
 
@@ -93,6 +91,18 @@ const styles = StyleSheet.create({
     medicationName: { fontSize: 16, fontWeight: 'bold' },
     medicationDose: { fontSize: 14, color: '#6C757D' },
     medicationTime: { fontSize: 14, marginTop: 5 },
-    summaryCard: { alignItems: 'center', backgroundColor: '#D1ECF1' },
-    summaryText: { fontSize: 16, fontWeight: 'bold', color: '#007BFF' },
+    summaryCard: { 
+        position:'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingVertical:'4%',
+        alignItems: 'center', 
+        backgroundColor: '#d1d1d1' 
+    },
+    summaryText: { 
+        fontSize: 16, 
+        fontWeight: 'bold', 
+        color: '#007BFF' 
+    },
 });
