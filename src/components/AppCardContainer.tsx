@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { Platform, StyleSheet, View, ViewStyle } from 'react-native';
 
 
 interface AppCardContainerProps {
@@ -14,14 +14,19 @@ const AppCardContainer: FC<AppCardContainerProps> = ({ children, style }) => {
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 16,
-        marginVertical: 8,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 2 },
-        elevation: 3,
+        borderRadius: 5,
+        padding: 10,
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.85, 
+                shadowRadius: 12, 
+            },
+            android: {
+                elevation: 3, 
+            },
+        }),
     },
 });
 

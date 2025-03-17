@@ -1,0 +1,89 @@
+{
+    "medications": [
+        {
+            "id": "1",
+            "name": "Lisinopril",
+            "dosage": "10mg",
+            "quantity": "1 tablet",
+            "time": "8:00 AM",
+            "instructions": "Take with breakfast",
+            "specialNotes": "",
+            "status": "taken",
+            "takenAt": "8:05 AM",
+            "inventory": 23,
+            "adherence": {
+                "weekly": 100
+            }
+        },
+        {
+            "id": "2",
+            "name": "Metformin",
+            "dosage": "500mg",
+            "quantity": "1 tablet",
+            "time": "12:00 PM",
+            "instructions": "Take with lunch",
+            "specialNotes": "",
+            "status": "taken",
+            "takenAt": "12:10 PM",
+            "inventory": 45,
+            "adherence": {
+                "weekly": 85.7
+            }
+        },
+        {
+            "id": "3",
+            "name": "Atorvastatin",
+            "dosage": "20mg",
+            "quantity": "1 tablet",
+            "time": "6:00 PM",
+            "instructions": "Take after dinner with water",
+            "specialNotes": "Avoid grapefruit juice",
+            "status": "upcoming",
+            "takenAt": null,
+            "inventory": 3,
+            "adherence": {
+                "weekly": 71.4
+            }
+        }
+    ],
+    "weeklyAdherence": {
+        "overall": 85.7,
+        "dosesTaken": 18,
+        "totalDoses": 21,
+        "daily": [
+            {
+                "day": "Mon",
+                "rate": 66.7
+            },
+            {
+                "day": "Tue",
+                "rate": 100
+            },
+            {
+                "day": "Wed",
+                "rate": 100
+            },
+            {
+                "day": "Thu",
+                "rate": 100
+            },
+            {
+                "day": "Fri",
+                "rate": 100
+            },
+            {
+                "day": "Sat",
+                "rate": 33.3
+            },
+            {
+                "day": "Sun",
+                "rate": 100
+            }
+        ]
+    },
+    "todayProgress": {
+        "adherenceRate": 67,
+        "totalForToday": 3,
+        "takenToday": 2
+    }
+}
