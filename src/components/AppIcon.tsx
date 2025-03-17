@@ -1,6 +1,5 @@
-import { StyleSheet, } from 'react-native'
+import { Image, StyleSheet, } from 'react-native'
 import React, { FC } from 'react'
-import FastImage from 'react-native-fast-image'
 import { PlusIcon } from '../assets/appIcons'
 
 interface AppIconProps {
@@ -17,7 +16,7 @@ const AppIcon: FC<AppIconProps> = ({
     width = 20
 }) => {
     return (
-        <FastImage
+        <Image
             source={source}
             style={{
                 width: width,

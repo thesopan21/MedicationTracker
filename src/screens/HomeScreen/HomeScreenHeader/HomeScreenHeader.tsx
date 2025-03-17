@@ -5,7 +5,7 @@ import { PlusIcon } from '../../../assets/appIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
-const safePadding = '5%';
+const safePadding = '2%';
 
 const HomeScreenHeader = () => {
 
@@ -32,7 +32,7 @@ export default HomeScreenHeader
 const styles = StyleSheet.create({
     headerContainer: {
         paddingHorizontal: safePadding,
-        paddingVertical: safePadding,
+        paddingVertical: '5%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'

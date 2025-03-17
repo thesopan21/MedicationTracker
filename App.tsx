@@ -1,109 +1,38 @@
 import React from 'react';
-import {
-  FlatList,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './src/screens/HomeScreen/HomeScreen';
+import CalenderScreen from './src/screens/CalenderScreen/CalenderScreen';
+import HealthDataScreen from './src/screens/HealthDataScreen/HealthDataScreen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar, useColorScheme } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
-import HomeScreenHeader from './src/screeens/HomeScreen/HomeScreenHeader/HomeScreenHeader';
-import AppCardContainer from './src/components/AppCardContainer';
-import CircularProgress from 'react-native-circular-progress-indicator';
-import { medications } from "./src/data/sample_data.json";
-
-
-const safePadding = '2%';
+const Stack = createStackNavigator();
 
 function App(): React.JSX.Element {
 
-  const isDarkMode = useColorScheme() === 'dark';
 
+  const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-
   return (
-    <View style={backgroundStyle}>
+    <SafeAreaProvider>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <HomeScreenHeader />
-      <ScrollView style={[backgroundStyle, { paddingHorizontal: safePadding }]}>
-
-        <AppCardContainer style={styles.progressCard}>
-          <Text>Today's Progress</Text>
-          <View style={styles.progressRow}>
-            <CircularProgress
-              value={67}
-              activeStrokeColor={'#2465FD'}
-              activeStrokeSecondaryColor={'#C25AFF'}
-            />
-
-            <View style={styles.progressTextContainer}>
-              <Text style={styles.progressText}>2 of 3 medications taken</Text>
-              <Text style={styles.nextMed}>Next: Atorvastatin at 6:00 PM</Text>
-            </View>
-          </View>
-        </AppCardContainer>
-
-
-        <Text style={styles.timelineTitle}>Timeline</Text>
-        <FlatList
-          data={medications}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <AppCardContainer style={styles.medicationCard}>
-              <Text style={styles.medicationName}>{item.name}</Text>
-              <Text style={styles.medicationDose}>{item.dosage}</Text>
-              <Text style={[styles.medicationTime, { color: item.status === 'taken' ? '#28A745' : '#888' }]}>
-                {item.status}
-              </Text>
-            </AppCardContainer>
-          )}
-        />
-
-        <AppCardContainer style={styles.summaryCard}>
-          <Text style={styles.summaryText}>View Weekly Summary</Text>
-        </AppCardContainer>
-      </ScrollView>
-    </View>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Calender" component={CalenderScreen} />
+          <Stack.Screen name="HealthData" component={HealthDataScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  progressCard: {
-  },
-  progressRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly'
-  },
-  progressTextContainer: {
-    marginLeft: 20
-  },
-  progressText: {
-    fontSize: 16,
-    fontWeight: 'bold'
-  },
-  nextMed: {
-    fontSize: 14,
-    color: '#6C757D'
-  },
-  timelineTitle: { fontSize: 18, fontWeight: 'bold', marginVertical: 10 },
-  medicationCard: { padding: 12 },
-  medicationName: { fontSize: 16, fontWeight: 'bold' },
-  medicationDose: { fontSize: 14, color: '#6C757D' },
-  medicationTime: { fontSize: 14, marginTop: 5 },
-  summaryCard: { alignItems: 'center', backgroundColor: '#D1ECF1' },
-  summaryText: { fontSize: 16, fontWeight: 'bold', color: '#007BFF' },
-});
 
 export default App;
