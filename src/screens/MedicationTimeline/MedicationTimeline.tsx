@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import AppCardContainer from '../../components/AppCardContainer';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 
-interface MedicationProps {
+export interface MedicationProps {
     id: string,
     name: string,
     dosage: string,
@@ -23,7 +25,19 @@ interface MedicationTimelineProps {
     medications: MedicationProps[]
 }
 
+interface RootStackParamList extends ParamListBase {
+    MedicationDetailScreen: {
+        item: MedicationProps
+    }
+}
+
 const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
+
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+    const weeklySummeryhandler = (item: MedicationProps) => {
+        navigation.push('MedicationDetailScreen', { item })
+    }
 
     const renderItem = ({ item, index }: { item: MedicationProps, index: number }) => {
         return (
@@ -50,31 +64,19 @@ const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
         );
     };
 
-    //     const medicationHour = parseInt(medicationTime.split(':')[0]);
-    //     const medicationMinute = parseInt(medicationTime.split(':')[1].split(' ')[0]);
 
-    //     const now = new Date();
-    //     const currentHour = now.getHours();
-    //     const currentMinute = now.getMinutes();
+    const renderFooterComponent = () => {
 
-    //     const medicationTimeInMinutes = medicationHour * 60 + medicationMinute;
-    //     const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
-    //     const differenceInMinutes = medicationTimeInMinutes - currentTimeInMinutes;
+        if (medications.length === 0) return null;
+        const lastItem = medications[medications.length - 1];
 
-    //     if (differenceInMinutes <= 0) {
-    //         return "Past time";
-    //     }
-
-    //     const hours = Math.floor(differenceInMinutes / 60);
-    //     const minutes = differenceInMinutes % 60;
-
-    //     if (hours > 0) {
-    //         return `in ${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''}`;
-    //     } else {
-    //         return `in ${minutes} minute${minutes > 1 ? 's' : ''}`;
-    //     }
-    // };
+        return (
+            <TouchableOpacity style={styles.summaryButton} onPress={() => weeklySummeryhandler(lastItem)}>
+                <Text style={styles.summaryButtonText}>View Weekly Summary</Text>
+            </TouchableOpacity>
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -84,6 +86,8 @@ const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
                 renderItem={renderItem}
                 contentContainerStyle={styles.contentContainer}
                 keyExtractor={(item) => item.id.toString()}
+                ListFooterComponent={renderFooterComponent}
+                ListFooterComponentStyle={styles.listFooterStyle}
             />
         </View>
     );
@@ -91,7 +95,8 @@ const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 12
+        paddingVertical: 12,
+        flex: 1
     },
     title: {
         fontSize: 20,
@@ -99,7 +104,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     contentContainer: {
+        height: '100%',
         paddingVertical: 2,
+        paddingHorizontal: 6
+    },
+    listFooterStyle: {
     },
     itemContainer: {
         flexDirection: 'row',
@@ -156,6 +165,18 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#1483fa',
         marginTop: 4,
+    },
+    summaryButton: {
+        backgroundColor: '#e8e5e3',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        bottom: -40,
+    },
+    summaryButtonText: {
+        color: '#1483fa',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 

@@ -4,19 +4,10 @@ import { ProgressCircle } from 'react-native-svg-charts';
 import { medications } from "../../data/sample_data.json";
 import MedicationTimeline from '../MedicationTimeline/MedicationTimeline';
 import AppCardContainer from '../../components/AppCardContainer';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
-interface RootStackParamList extends ParamListBase{
-    MedicationDetailScreen: undefined
-}
 
 const MedicationScreen = () => {
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-    const weeklySummeryhandler = () => {
-        navigation.push('MedicationDetailScreen')
-    }
+    
 
     return (
         <View style={styles.container}>
@@ -49,10 +40,6 @@ const MedicationScreen = () => {
 
             <MedicationTimeline medications={medications} />
 
-
-            <TouchableOpacity style={styles.summaryButton} onPress={weeklySummeryhandler}>
-                <Text style={styles.summaryButtonText}>View Weekly Summary</Text>
-            </TouchableOpacity>
 
             <View style={styles.tabBar}>
                 <Text style={styles.tabItemActive}>Today</Text>
@@ -160,22 +147,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#FF9800',
         marginTop: 5,
-    },
-    summaryButton: {
-        backgroundColor: '#e8e5e3',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: '10%',
-        left: 0,
-        right: 0,
-        marginHorizontal: 12
-    },
-    summaryButtonText: {
-        color: '#1483fa',
-        fontSize: 16,
-        fontWeight: 'bold',
     },
     tabBar: {
         position: 'absolute',

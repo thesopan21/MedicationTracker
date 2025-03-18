@@ -1,74 +1,107 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import AppCardContainer from '../../components/AppCardContainer';
+import { ParamListBase, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { MedicationProps } from '../MedicationTimeline/MedicationTimeline';
+import { medications } from "../../data/sample_data.json";
+import { StackNavigationProp } from '@react-navigation/stack';
+
+interface RootStackParamList extends ParamListBase {
+  MedicationDetailScreen: { item: MedicationProps };
+}
 
 const MedicationDetailScreen = () => {
+
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'MedicationDetailScreen'>>();
+  const { item } = route.params as { item: MedicationProps };
+
+
+
+  const handleMarkAsTaken = () => {
+    // here i want to modify array itself by using forEach method
+    const updatedMedications = medications.map((med) =>
+      med.id === item.id ? { ...med, status: 'taken' } : med
+  );
+  
+  console.log('handler mark as taken called for:', medications)
+    // navigation.push('MedicationScreen')
+  }
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.header}>
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>A</Text>
         </View>
         <View style={styles.headerText}>
-          <Text style={styles.medicationName}>Atorvastatin</Text>
-          <Text style={styles.medicationDosage}>20mg - 1 tablet - After dinner</Text>
+          <Text style={styles.medicationName}>{item.name}</Text>
+          <Text style={styles.medicationDosage}>{item.dosage} - {item.quantity} - {item.instructions}</Text>
         </View>
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Schedule</Text>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Time</Text>
-          <Text style={styles.detailValue}>6:00 PM</Text>
-        </View>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Frequency</Text>
-          <Text style={styles.detailValue}>Daily</Text>
-        </View>
+      <View style={styles.container}>
+        <AppCardContainer style={styles.section}>
+          <Text style={styles.sectionTitle}>Schedule</Text>
+          <View style={styles.detailRow}>
+            <Text style={styles.detailLabel}>Time</Text>
+            <Text style={styles.detailValue}>{item.time}</Text>
+          </View>
+          <View style={styles.detailRow}>
+            <Text style={styles.detailLabel}>Frequency</Text>
+            <Text style={styles.detailValue}>Daily</Text>
+          </View>
+        </AppCardContainer>
+
+        <AppCardContainer style={styles.section}>
+          <Text style={styles.sectionTitle}>Instructions</Text>
+          <View style={styles.detailRow}>
+            <Text style={styles.detailLabel}>How to take</Text>
+            <Text style={styles.detailValue}>{item.instructions}</Text>
+          </View>
+          <View style={styles.detailRow}>
+            <Text style={styles.detailLabel}>Special notes</Text>
+            <Text style={styles.detailValue}>{item.specialNotes}</Text>
+          </View>
+        </AppCardContainer>
+
+        <AppCardContainer style={styles.section}>
+          <Text style={styles.sectionTitle}>Inventory</Text>
+          <View style={styles.detailRow}>
+            <Text style={styles.detailLabel}>Remaining</Text>
+            <Text style={[styles.detailValue, styles.lowInventory]}>
+              {item.inventory} tablets (Low)
+            </Text>
+          </View>
+        </AppCardContainer>
+
+        <TouchableOpacity style={styles.markTakenButton} onPress={handleMarkAsTaken}>
+          <Text style={styles.markTakenText}>Mark as Taken</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.editButton}>
+          <Text style={styles.editText}>Edit Medication</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Instructions</Text>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>How to take</Text>
-          <Text style={styles.detailValue}>Take after dinner with water</Text>
-        </View>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Special notes</Text>
-          <Text style={styles.detailValue}>Avoid grapefruit juice</Text>
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Inventory</Text>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Remaining</Text>
-          <Text style={[styles.detailValue, styles.lowInventory]}>
-            3 tablets (Low)
-          </Text>
-        </View>
-      </View>
-
-      <TouchableOpacity style={styles.markTakenButton}>
-        <Text style={styles.markTakenText}>Mark as Taken</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.editButton}>
-        <Text style={styles.editText}>Edit Medication</Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeAreaView: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: '#f0f0f0',
+  },
+  container: {
+    paddingHorizontal: '4%'
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    padding: '6%',
+    width: '100%',
+    backgroundColor: '#fff',
   },
   avatar: {
     width: 50,
@@ -82,6 +115,7 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#f77f07'
   },
   headerText: {
     flex: 1,
@@ -95,10 +129,10 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   section: {
-    backgroundColor: '#f0f0f0',
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
+    backgroundColor: '#fff',
   },
   sectionTitle: {
     fontSize: 18,
@@ -141,6 +175,7 @@ const styles = StyleSheet.create({
   editText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#2196F3'
   },
 });
 
