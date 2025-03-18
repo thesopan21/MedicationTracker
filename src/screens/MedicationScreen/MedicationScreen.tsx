@@ -4,6 +4,7 @@ import { ProgressCircle } from 'react-native-svg-charts';
 import MedicationTimeline from '../MedicationTimeline/MedicationTimeline';
 import AppCardContainer from '../../components/AppCardContainer';
 import { useMedications } from '../../context/MedicationContext';
+import Footer from '../../components/Footer';
 
 
 const MedicationScreen = () => {
@@ -41,12 +42,7 @@ const MedicationScreen = () => {
 
             <MedicationTimeline medications={state.medications} />
 
-
-            <View style={styles.tabBar}>
-                <Text style={styles.tabItemActive}>Today</Text>
-                <Text style={styles.tabItem}>Calendar</Text>
-                <Text style={styles.tabItem}>Health Data</Text>
-            </View>
+            <Footer />
         </View>
     );
 };
@@ -149,25 +145,7 @@ const styles = StyleSheet.create({
         color: '#FF9800',
         marginTop: 5,
     },
-    tabBar: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        paddingVertical: '6%',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        backgroundColor: '#FFF'
-    },
-    tabItem: {
-        fontSize: 16,
-        color: '#888',
-    },
-    tabItemActive: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#2196F3',
-    },
+    
 });
 
 export default MedicationScreen;

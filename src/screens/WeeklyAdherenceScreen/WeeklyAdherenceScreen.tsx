@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import Footer from '../../components/Footer';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -82,11 +83,7 @@ const WeeklyAdherenceScreen = () => {
                 </View>
             </View>
 
-            <View style={styles.tabBar}>
-                <Text style={styles.tabItem}>Today</Text>
-                <Text style={styles.tabItemActive}>Calendar</Text>
-                <Text style={styles.tabItem}>Health Data</Text>
-            </View>
+            <Footer />
         </View>
     );
 };
