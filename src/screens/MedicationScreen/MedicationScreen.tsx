@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { ProgressCircle } from 'react-native-svg-charts';
 import MedicationTimeline from '../MedicationTimeline/MedicationTimeline';
 import AppCardContainer from '../../components/AppCardContainer';
@@ -12,51 +12,53 @@ const MedicationScreen = () => {
     const { state, } = useMedications();
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.header}>
                 <Text style={styles.title}>Medications</Text>
                 <TouchableOpacity style={styles.addButton}>
                     <Text style={styles.addButtonText}>+</Text>
                 </TouchableOpacity>
             </View>
-
-            <AppCardContainer style={styles.progressCard}>
-                <Text style={styles.progressText}>Today's Progress</Text>
-                <View style={styles.progressContainer}>
-                    <View style={styles.circleContainer}>
-                        <ProgressCircle
-                            style={styles.progressCircle}
-                            progress={67 / 100}
-                            progressColor={'#fc5d23'}
-                            backgroundColor={'#E0E0E0'}
-                            strokeWidth={8}
-                        />
-                        <Text style={styles.text}>{`${67}%`}</Text>
+            <View style={styles.container}>
+                <AppCardContainer style={styles.progressCard}>
+                    <Text style={styles.progressText}>Today's Progress</Text>
+                    <View style={styles.progressContainer}>
+                        <View style={styles.circleContainer}>
+                            <ProgressCircle
+                                style={styles.progressCircle}
+                                progress={67 / 100}
+                                progressColor={'#fc5d23'}
+                                backgroundColor={'#E0E0E0'}
+                                strokeWidth={8}
+                            />
+                            <Text style={styles.text}>{`${67}%`}</Text>
+                        </View>
+                        <View style={styles.progressTextContainer}>
+                            <Text style={styles.progressDetail}>2 of 3 medications taken</Text>
+                            <Text style={styles.progressDetail}>Next: Atorvastatin at 6:00 PM</Text>
+                        </View>
                     </View>
-                    <View style={styles.progressTextContainer}>
-                        <Text style={styles.progressDetail}>2 of 3 medications taken</Text>
-                        <Text style={styles.progressDetail}>Next: Atorvastatin at 6:00 PM</Text>
-                    </View>
-                </View>
-            </AppCardContainer>
+                </AppCardContainer>
 
-            <MedicationTimeline medications={state.medications} />
-
+                <MedicationTimeline medications={state.medications} />
+            </View>
             <Footer />
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
+        padding: 12,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 8,
+        backgroundColor: '#fff',
+        padding: 16
     },
     time: {
         fontSize: 16,
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
         color: '#FF9800',
         marginTop: 5,
     },
-    
+
 });
 
 export default MedicationScreen;
