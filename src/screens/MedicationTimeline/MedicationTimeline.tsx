@@ -37,43 +37,44 @@ const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
                         <Text style={styles.medicationName}>{item.name}</Text>
                         <Text style={styles.medicationTime}>{item.time}</Text>
                     </View>
-                    <Text style={styles.medicationDetail}>{item.dosage} - {item.quantity} - {item.instructions.replace('Take ', '').replace('with', 'With')}</Text>
-                    {item.status === 'taken' ? (
-                        <Text style={styles.takenText}>Taken at {item.takenAt}</Text>
-                    ) : (
-                        <Text style={styles.comingText}>Coming up in {calculateTimeDifference(item.time)}</Text>
-                    )}
+                    <Text style={styles.medicationDetail}>{item.dosage} - {item.quantity} - {item.instructions}</Text>
+                    {
+                        item.status === 'taken' ? (
+                            <Text style={styles.takenText}>Taken at {item.takenAt}</Text>
+                        ) : (
+                            <Text style={styles.comingText}>Coming up in {item.time}</Text>
+                        )
+                    }
                 </AppCardContainer>
             </View>
         );
     };
 
-    const calculateTimeDifference = (medicationTime: string) => {
-        const medicationHour = parseInt(medicationTime.split(':')[0]);
-        const medicationMinute = parseInt(medicationTime.split(':')[1].split(' ')[0]);
+    //     const medicationHour = parseInt(medicationTime.split(':')[0]);
+    //     const medicationMinute = parseInt(medicationTime.split(':')[1].split(' ')[0]);
 
-        const now = new Date();
-        const currentHour = now.getHours();
-        const currentMinute = now.getMinutes();
+    //     const now = new Date();
+    //     const currentHour = now.getHours();
+    //     const currentMinute = now.getMinutes();
 
-        const medicationTimeInMinutes = medicationHour * 60 + medicationMinute;
-        const currentTimeInMinutes = currentHour * 60 + currentMinute;
+    //     const medicationTimeInMinutes = medicationHour * 60 + medicationMinute;
+    //     const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
-        const differenceInMinutes = medicationTimeInMinutes - currentTimeInMinutes;
+    //     const differenceInMinutes = medicationTimeInMinutes - currentTimeInMinutes;
 
-        if (differenceInMinutes <= 0) {
-            return "Past time";
-        }
+    //     if (differenceInMinutes <= 0) {
+    //         return "Past time";
+    //     }
 
-        const hours = Math.floor(differenceInMinutes / 60);
-        const minutes = differenceInMinutes % 60;
+    //     const hours = Math.floor(differenceInMinutes / 60);
+    //     const minutes = differenceInMinutes % 60;
 
-        if (hours > 0) {
-            return `in ${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''}`;
-        } else {
-            return `in ${minutes} minute${minutes > 1 ? 's' : ''}`;
-        }
-    };
+    //     if (hours > 0) {
+    //         return `in ${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''}`;
+    //     } else {
+    //         return `in ${minutes} minute${minutes > 1 ? 's' : ''}`;
+    //     }
+    // };
 
     return (
         <View style={styles.container}>
@@ -90,15 +91,14 @@ const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
+        paddingVertical: 12
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 20,
     },
-    contentContainer:{
-        paddingHorizontal: 10,
+    contentContainer: {
         paddingVertical: 2,
     },
     itemContainer: {
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     },
     dotContainer: {
         alignItems: 'center',
-        justifyContent:'center',
-        marginRight: 16,
+        justifyContent: 'center',
+        marginRight: 14,
     },
     dot: {
         width: 12,
@@ -127,12 +127,12 @@ const styles = StyleSheet.create({
     },
     medicationInfo: {
         flex: 1,
-        marginBottom: 10
+        marginBottom: 10,
     },
-    headingContainer:{
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center'
+    headingContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     medicationName: {
         fontSize: 16,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     comingText: {
         fontSize: 14,
-        color: 'orange',
+        color: '#1483fa',
         marginTop: 4,
     },
 });
