@@ -9,6 +9,7 @@ import { StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import MedicationScreen from './src/screens/MedicationScreen/MedicationScreen';
 import MedicationDetailScreen from './src/screens/MedicationDetailScreen/MedicationDetailScreen';
+import { MedicationProvider } from './src/context/MedicationContext';
 
 const Stack = createStackNavigator();
 
@@ -26,14 +27,16 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="MedicationScreen" component={MedicationScreen} />
-          <Stack.Screen name="MedicationDetailScreen" component={MedicationDetailScreen} />
-          <Stack.Screen name="Calender" component={CalenderScreen} />
-          <Stack.Screen name="HealthData" component={HealthDataScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <MedicationProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="MedicationScreen" component={MedicationScreen} />
+            <Stack.Screen name="MedicationDetailScreen" component={MedicationDetailScreen} />
+            <Stack.Screen name="Calender" component={CalenderScreen} />
+            <Stack.Screen name="HealthData" component={HealthDataScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </MedicationProvider>
     </SafeAreaProvider>
   );
 }

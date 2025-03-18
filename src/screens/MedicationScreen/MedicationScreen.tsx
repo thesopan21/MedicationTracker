@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ProgressCircle } from 'react-native-svg-charts';
-import { medications } from "../../data/sample_data.json";
 import MedicationTimeline from '../MedicationTimeline/MedicationTimeline';
 import AppCardContainer from '../../components/AppCardContainer';
+import { useMedications } from '../../context/MedicationContext';
 
 
 const MedicationScreen = () => {
-    
+
+    const { state, } = useMedications();
 
     return (
         <View style={styles.container}>
@@ -38,7 +39,7 @@ const MedicationScreen = () => {
                 </View>
             </AppCardContainer>
 
-            <MedicationTimeline medications={medications} />
+            <MedicationTimeline medications={state.medications} />
 
 
             <View style={styles.tabBar}>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import AppCardContainer from '../../components/AppCardContainer';
 import { ParamListBase, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { MedicationProps } from '../MedicationTimeline/MedicationTimeline';
-import { medications } from "../../data/sample_data.json";
+import sampleData from "../../data/sample_data.json";
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useMedications } from '../../context/MedicationContext';
 
 interface RootStackParamList extends ParamListBase {
   MedicationDetailScreen: { item: MedicationProps };
@@ -14,18 +15,21 @@ const MedicationDetailScreen = () => {
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'MedicationDetailScreen'>>();
+  
+  const { state, dispatch } = useMedications();
   const { item } = route.params as { item: MedicationProps };
 
+  useEffect(() => {
+    if (state.medications.length === 0) {
+      dispatch({ type: 'SET_MEDICATIONS', medications: sampleData.medications });
+    }
+  }, []); 
 
 
   const handleMarkAsTaken = () => {
-    // here i want to modify array itself by using forEach method
-    const updatedMedications = medications.map((med) =>
-      med.id === item.id ? { ...med, status: 'taken' } : med
-  );
-  
-  console.log('handler mark as taken called for:', medications)
-    // navigation.push('MedicationScreen')
+    dispatch({ type: 'MARK_AS_TAKEN', id: item.id });
+    console.log('Marked as taken:', state.medications);
+    navigation.push('MedicationScreen')
   }
 
   return (
