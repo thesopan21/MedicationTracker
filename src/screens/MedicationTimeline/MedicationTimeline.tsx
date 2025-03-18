@@ -39,7 +39,7 @@ const MedicationTimeline: FC<MedicationTimelineProps> = ({ medications }) => {
         navigation.push('MedicationDetailScreen', { item })
     }
 
-    const renderItem = ({ item, index }: { item: MedicationProps, index: number }) => {
+    const renderItem = ({ item }: { item: MedicationProps}) => {
         return (
             <View style={styles.itemContainer}>
                 <View style={styles.dotContainer}>

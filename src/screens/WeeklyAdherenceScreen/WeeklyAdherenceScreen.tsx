@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
-import { Dimensions } from 'react-native';
 import Footer from '../../components/Footer';
 import AppCardContainer from '../../components/AppCardContainer';
 import { weeklyAdherence } from "../../data/sample_data.json";
 
-const screenWidth = Dimensions.get('window').width;
 
 const WeeklyAdherenceScreen = () => {
 
@@ -28,8 +26,8 @@ const WeeklyAdherenceScreen = () => {
                                     style={[
                                         styles.bar,
                                         {
-                                            height: (day.rate / maxRate) * 100, // Scale the bar height
-                                            backgroundColor: day.rate === 33.3 ? 'red' : '#07d969', // Highlight low adherence
+                                            height: (day.rate / maxRate) * 100, 
+                                            backgroundColor: day.rate === 33.3 ? 'red' : '#07d969', 
                                         },
                                     ]}
                                 />
@@ -43,11 +41,11 @@ const WeeklyAdherenceScreen = () => {
                     <Text style={styles.cardTitle}>Statistics</Text>
                     <View style={styles.statsRow}>
                         <Text style={styles.statsLabel}>Overall Adherence</Text>
-                        <Text style={styles.statsValue}>85.7%</Text>
+                        <Text style={styles.statsValue}>{overall}%</Text>
                     </View>
                     <View style={styles.statsRow}>
                         <Text style={styles.statsLabel}>Doses Taken</Text>
-                        <Text style={styles.statsValue}>18 of 21</Text>
+                        <Text style={styles.statsValue}>{dosesTaken} of {totalDoses}</Text>
                     </View>
                 </AppCardContainer>
 

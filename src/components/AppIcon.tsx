@@ -28,9 +28,3 @@ const AppIcon: FC<AppIconProps> = ({
 }
 
 export default AppIcon
-
-const styles = StyleSheet.create({
-    image: {
-
-    }
-})
